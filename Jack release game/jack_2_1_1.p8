@@ -136,14 +136,14 @@ fboss_arr = find_point_zone(37)
 if fboss_arr[0] ~= nil then
 mset(fboss_arr[0].x,fboss_arr[0].y,68)
 end
-fboss_arr =normilize(fboss_arr)
-torch_arr =find_point_zone(48)
-heart_arr =find_point_zone(80)
-coin_arr =find_point_zone(96)
-dial_arr =find_point_zone(17)
-current_dial= 0
+fboss_arr = normilize(fboss_arr)
+torch_arr = find_point_zone(48)
+heart_arr = find_point_zone(80)
+coin_arr = find_point_zone(96)
+dial_arr = find_point_zone(17)
+current_dial = 0
 dial_ex()
-enemy_arr =find_point_zone(132)
+enemy_arr = find_point_zone(132)
 enemy_ex()
 else
 fboss_arr = {}
@@ -179,6 +179,8 @@ elseif mm_status == 3 then
 level_menu_update()
 elseif mm_status == 4 then
 dset(0,0)
+dset(1,1)
+maxlvc=1
 hero.hp = 3
 hero.coins = 0
 hero.s = 0
@@ -213,13 +215,13 @@ end
 if btnp(❎) then
 sfx"53"
 music(-1)
-if(maxlvc > 0 and mm_pos+1 == 3) or mm_pos+1 ~= 3 or dbg then
+if(maxlvc > 1 and mm_pos+1 == 3) or mm_pos+1 ~= 3 or dbg then
 mm_status = mm_pos+1
 if mm_status==1 then
 if(not str_game) then
 set_lvl(1)
 end
-str_game= true
+str_game=true
 if mode > 1 and current_level > 2 then
 c_l = current_level-1
 b_p_z = point_zone.last
@@ -233,7 +235,8 @@ else
 hero.hp = mode==1 and 1 or hero.hp
 end
 end
-end end
+end
+end
 end
 function level_menu_update()
 lm_pos = lm_pos == 0 and 1 or lm_pos 
@@ -423,8 +426,8 @@ if(dget(0) < hero.s) then
 dset(0,hero.s)
 record_score = hero.s
 end
-maxlvc= maxlvc+2==current_level and maxlvc+1 or maxlvc
-dset(1,maxlvc+1)
+maxlvc= maxlvc+1==current_level and maxlvc+1 or maxlvc
+dset(1,maxlvc)
 set_lvl(current_level)
 end
 end
@@ -489,8 +492,7 @@ if coly.y <= hero.sy then
 hero.sy = -2*sgn(hero.sy)
 else
 hero.y = ((hero.sy ~= 0 and
-coly.y-9 <= 0) and not hero.is_crouch) and
-flr(hero.y/8)*8 or hero.y
+coly.y-9 <= 0) and not hero.is_crouch) and flr(hero.y/8)*8 or hero.y
 hero.sy = coly.y-9 <= 0 and 0or coly.y-9
 end
 end
@@ -501,13 +503,13 @@ hero.sx *= -1
 else
 xpow = 0
 end
-double_jump()end
-xpow =(colx == nil or
-hero.on_flore) and 1 or xpow
+double_jump()
+end
+xpow = (colx == nil or hero.on_flore) and 1 or xpow
 update_ex_h(hero)
 ex_hero.sy = -1
 coly = dist_to_col(ex_hero,1,is_b2,1,1)
-if( (btnp(⬆️)or btnp(4)) and not hero.is_crouch
+if((btnp(⬆️) or btnp(4)) and not hero.is_crouch
 and hero.on_flore)
 and coly == nil then
 sfx"52"
@@ -528,10 +530,7 @@ hero.sx *= -1
 xpow = 1
 end
 dash = 1
-if ((btn(➡️) and hero.sx > 0) or
-(btn(⬅️) and hero.sx < 0))
-and skil_rest > 2 and
-not hero.is_crouch then
+if ((btn(➡️) and hero.sx > 0) or(btn(⬅️) and hero.sx < 0))and skil_rest > 2 and not hero.is_crouch then
 if dash_sg > 0 then
 if btnp(➡️) or btnp(⬅️) then
 sfx"61"
@@ -553,22 +552,20 @@ hero.is_crouch = false
 if(g_time>0 and btn(⬇️)and skil_rest > 1) or
 (col ~= nil and abs(col.y) > 1)then
 dash_sg =(power_f or dash_sg <= 0) and dash_sg-0 or dash_sg-1
-if(dash_sg >0)or
-(col ~= nil and abs(col.y) > 1)then
+if(dash_sg >0) or (col ~= nil and abs(col.y) > 1)then
 hero.is_crouch = true
 end
 end
 if hc_p and hero.sy == 0 and hc_p ~=hero.is_crouch then
 hero.y -=8
-end end
+end
+end
 function double_jump()
 update_ex_h(hero)
 ex_hero.sy = -1
 coly = dist_to_col(ex_hero,1,is_b2,1,1)
-if (btnp(⬆️)or btnp(4))and hero.sy>0 and
-coly== nil and skil_rest >0
-and not hero.is_crouch
-then
+if (btnp(⬆️) or btnp(4)) and hero.sy > 0 and
+coly == nil and skil_rest > 0 and not hero.is_crouch then
 hero.sy -= jump_power*1.25
 hero.sx *= -1
 xpow = 1
@@ -590,8 +587,7 @@ function button_method(zone)
 if action ~= zone+1 then
 action = zone+1
 button_zone[zone].is_active = not button_zone[zone].is_active
-sfx(button_zone[zone].is_active
-and 58 or 57)
+sfx(button_zone[zone].is_active and 58 or 57)
 chains_method()
 end
 end
@@ -606,11 +602,12 @@ while j <= j_siz do
 n_b =chains_zone[i].b[j]
 if(button_zone[n_b]~= nil) then
 c_b = button_zone[n_b]
-chains_zone[i].is_active =
-c_b.is_active
+chains_zone[i].is_active = c_b.is_active
 j = c_b.is_active and j+1 or j_siz+1
-else j+=1
-end end
+else
+j+=1
+end
+end
 if chains_zone[i].is_active~= chains_zone[i].buf_st then
 chains_zone[i].ch = 0
 chains_zone[i].buf_st =chains_zone[i].is_active
@@ -620,15 +617,18 @@ end
 function update_buff()
 if buff_arr ~= nil and buff_arr[0] ~= nil then
 for i=0,#buff_arr,1 do
-if (no_map_col(hero,buff_arr[i],12,0) and buff_arr[i].is_active)
+if (no_map_col(hero,buff_arr[i],
+12,0) and buff_arr[i].is_active)
 then
-buff_arr[i].is_active= false sfx"60"
+buff_arr[i].is_active= false
+sfx"60"
 skil_rest+=1
-if buff_arr[i].ico ==10 then
-power_f = true
+if buff_arr[i].ico==10 then
+power_f=true
 end
-hero.s += 200*mode
-if(skil_rest==3) then music(-1)end
+hero.s+=200*mode
+if(skil_rest==3) then
+music(-1)end
 end 
 end 
 end
@@ -668,7 +668,8 @@ d.s2 = 116
 elseif c_b == 116 then
 d.y = -1
 d.s = 115
-d.s2 = 116 end
+d.s2 = 116
+end
 return d
 end
 ch_time = 0
@@ -685,8 +686,7 @@ mset(x,y,dir_c.x+dir_c.y==1 and n or n2)
 ch_obj.ch = a and ch+1 or ch
 end
 if (a and a1) and ch_time == 0 then
-mset(x+dir_c.x,y+dir_c.y,
-dir_c.x+dir_c.y==1 and n2 or n)
+mset(x+dir_c.x,y+dir_c.y,dir_c.x+dir_c.y==1 and n2 or n)
 ch_obj.ch = a1 and ch+2 or ch
 end
 ch_time+=1
@@ -719,10 +719,8 @@ function button_ex()
 if button_zone[0] ~= nil then
 for i = 0, #button_zone, 1 do
 button_zone[i].is_active = 
-mget(button_zone[i].x,
-button_zone[i].y) == 85
-mset(button_zone[i].x,
-button_zone[i].y,68)
+mget(button_zone[i].x,button_zone[i].y) == 85
+mset(button_zone[i].x,button_zone[i].y,68)
 button_zone[i].x*=8
 button_zone[i].y*=8
 end
@@ -730,16 +728,14 @@ end
 end
 function update_point(col,pz,blk,method)
 for i = 0, #pz, 1 do
-if pz[i].x == col.x/8 and 
-pz[i].y == col.y/8 then
+if pz[i].x == col.x/8 and pz[i].y == col.y/8 then
 method(pz,i,blk)
 end
 end
 end
 function update_save_form()
 if save_form and time_damage >= 0 then
-time_damage = flr(save_ef_speed*
-(second_save+last- time()))
+time_damage = flr(save_ef_speed*(second_save+last- time()))
 save_form = time_damage>= 0
 else
 time_damage = save_ef_speed*second_save
@@ -753,7 +749,7 @@ diff = 0
 function update_tr(obj,signal)
 local x
 local y
-diff =(signal or diff > 0) and diff+1 or diff
+diff = (signal or diff > 0) and diff+1 or diff
 if diff > 20 then
 diff = 0
 end
@@ -762,19 +758,18 @@ cur = (signal and diff == 1) and
 collide(ex_hero,3,is_b2,1,1) or cur
 x = cur.x ~= nil and cur.x/8 or x
 y = cur.y ~= nil and cur.y/8 or y   
-if (mget(x,y) == 113or mget(x,y) == 112) 
-and cur.x ~= nil and cur.y ~= nil then
+if (mget(x,y) == 113or mget(x,y) == 112) and cur.x ~= nil and cur.y ~= nil then
 if(diff < 3 or diff > 17)then
 mset(x,y,112)
-mset (x,y-1,mget(x,y-2))
+mset(x,y-1,mget(x,y-2))
 else 
 mset(x,y,113)
-mset (x,y-1,mget(x+1,y-1)==68 and 114 or 107) 
+mset(x,y-1,mget(x+1,y-1)==68 and 114 or 107) 
 end 
 end
 end
 function dial_ex()
-if dial_arr ~= nil and 
+if dial_arr ~= nil and
 dial_arr[0] ~= nil then
 for i = 0, #dial_arr, 1 do
 dial_arr[i].img = mget(dial_arr[i].x,
@@ -824,7 +819,8 @@ del_fl = true
 end
 end
 end
-if del_fl then for i=1,#dash_tail_arr do
+if del_fl then
+for i=1,#dash_tail_arr do
 dash_tail_arr[i-1]=dash_tail_arr[i]
 end
 dash_tail_arr[ind_dt] = nil
@@ -903,7 +899,8 @@ if no_map_col(hero,pz[i],16,spike)and not save_form then
 hero.hp-=1
 sfx"55"
 save_form = true
-end end
+end
+end
 end
 end
 function undrgr_enemy(enemy)
@@ -944,11 +941,7 @@ col2 = dist_to_col(
 enemy_arr[j],1,is_b2,0,0)
 enemy_arr[j].flyaible =enemy_arr[j].img == fly_enemy
 enemy_arr[j].undergr=enemy_arr[j].img == undergr_enemy
-enemy_arr[j].max_f=enemy_arr[j].flyaible 
-and fly_spr_count or
-(enemy_arr[j].undergr and
-undergr_spr_count or
-walk_spr_count)
+enemy_arr[j].max_f=enemy_arr[j].flyaible and fly_spr_count or (enemy_arr[j].undergr and undergr_spr_count or walk_spr_count)
 enemy_arr[j].sy = 0
 enemy_arr[j].sx = f and -1 or 1
 end
@@ -971,9 +964,9 @@ diff_x = hero.x - arr[i].x*8
 diff_y = hero.y - arr[i].y*8
 if(skil_rest >= 3) then
 if(abs(diff_x) >= abs(diff_y)) then
-arr[i].x += diff_x * g_time/abs(diff_x)/10 
+arr[i].x +=diff_x*g_time/abs(diff_x)/10 
 else
-arr[i].y += diff_y * g_time/abs(diff_y)/20   
+arr[i].y +=diff_y*g_time/abs(diff_y)/20   
 end
 end
 end
@@ -990,10 +983,10 @@ fboss_blast = 0
 fboss_fly = 1
 function update_fboss(arr)
 for i = 1,# arr do
-local diff_x = hero.x - (i-1)*80 - arr[i].x*8
-local diff_y = hero.y - arr[i].y*8
+diff_x = hero.x - (i-1)*80 - arr[i].x*8
+diff_y = hero.y - arr[i].y*8
 if my_time%40 == 0 then
-local temp_rnd = flr(rnd(3))+1
+temp_rnd = flr(rnd(3))+1
 if temp_rnd > 2 then
 fboss_blast = 10
 sfx"62"
@@ -1058,8 +1051,10 @@ examp.x = i
 examp.y = j
 examp.is_active = false
 result[m] = examp
-m += 1end
-end end
+m += 1
+end
+end
+end
 return result
 end
 function off_points(pz,blk)
@@ -1071,9 +1066,7 @@ end end
 function _draw()
 cls()
 camera(0,0)
-if mm_status == 0 or
-mm_status == 4
-then
+if mm_status == 0 or mm_status == 4 then
 main_menu()
 elseif mm_status == 1 then
 camera(hero.x-64,hero.y-64)
@@ -1081,7 +1074,8 @@ level_draw()
 elseif mm_status == 2 then
 print("press ❎",40,0)
 for i = 2,5,1 do
-print(end_ct[i],10,i*10)end
+print(end_ct[i],10,i*10)
+end
 elseif mm_status == 3 then
 level_menu_draw()
 else
@@ -1091,7 +1085,8 @@ end
 function game_over()
 print('game over',60,40,8)
 end
-t_mm = 0 sky = 0
+t_mm = 0
+sky = 0
 mod = 1
 function draw_start_logo()
 t_mm = t_mm > 20 and 0 or t_mm+1
@@ -1118,9 +1113,7 @@ draw_start_logo()
 end
 draw_rect(14,m_y,6,7)
 if mm_pos==0 and (dbg or maxlvc>8) then
-print("choose mod:\n".."⬅️"..(mode==0
-and "normal" or(mode==1 and
-"one hearth" or "two mages")).."➡️",16,84)
+print("choose mod:\n".."⬅️"..(mode==0 and "normal" or(mode==1 and "one hearth" or "two mages")).."➡️",16,84)
 end
 button_m(str_game and "continue" or "start",0,16,5,mm_pos)
 button_m("about",1,16,5,mm_pos)
@@ -1187,21 +1180,25 @@ if not arr[i].is_active then
 spr(spike_spr,arr[i].x,arr[i].y - sgn(arr[i].y-hero.y)*8,1,1,false,sgn(arr[i].y-hero.y) < 0)
 end
 end
-end end
+end
+end
 function draw_button(blk)
 if button_zone[0] ~= nil then
 for i = 0, #button_zone, 1 do
 local x = button_zone[i].x
 local y = button_zone[i].y
 spr( button_zone[i].is_active and blk+1 or blk,x,y,1,1,is_b(x+8,y) == 2)
-end end end
+end
+end
+end
 ntt= 0
 function _draw_boss(arr)
 ntt = my_time%5 == 0 and 16*(my_time%3) or ntt
 for i=1,#arr do
 sspr(112,16,16,8,arr[i].x*8,arr[i].y*8)
 sspr(48 + ntt,8,16,8,arr[i].x*8,arr[i].y*8-8)
-end end
+end
+end
 function _draw_fboss(arr)
 for i=1,#arr do
 tsd = flr((my_time%20)/10)*2
@@ -1232,15 +1229,16 @@ if #dial_arr > 0 then
 for i=0,#dial_arr,1 do
 if dial_arr[i].is_active then
 draw_rect(hero.x-32,hero.y-30,10,5)
-print(dial_arr[i].d,hero.x-24,
-hero.y-16)
+print(dial_arr[i].d,hero.x-24,hero.y-16)
 end
 if no_map_col(hero,dial_arr[i],32,0) then
 print(dial_arr[i].is_active and "" or"press ❎ to read", hero.x-16,hero.y-24)           
 if (dial_arr[i].is_active and(btnp(5) or btnp(1)or btnp(2)or btnp(3)or btnp(4) or btnp(0)) or(btnp(5) and not dial_arr[i].is_active)) then
 g_time = g_time == 0 and 1 or 0
 dial_arr[i].is_active = not dial_arr[i].is_active
-end end end
+end
+end
+end
 end
 end
 ch_t = 0
@@ -1254,7 +1252,8 @@ for i=0,#buff_arr,1 do
 mset( buff_arr[i].x/8, buff_arr[i].y/8 ,buff_arr[i].is_active and buff_arr[i].ico + (p)%2 or 68) end
 ch_t = 0
 end
-end end
+end
+end
 function draw_hero_hp()
 if current_level < 11 then
 for i = 1,hero.hp do
@@ -1276,11 +1275,11 @@ if #sub_str == 1 then
 x = 0
 y += 1
 elseif #sub_str == 2 or #sub_str == 3 then
-local s1 = sub(sub_str,1,#sub_str)
+s1 = sub(sub_str,1,#sub_str)
 mset(x,y,s1)
 x += 1
 else
-x_sym = get_sumb_index(sub_str, 0, 'x')amount = sub(sub_str,x_sym+1,#sub_str)
+x_sym = get_sumb_index(sub_str,0, 'x')amount = sub(sub_str,x_sym+1,#sub_str)
 for j = 0,amount-1 do
 local s3 = sub(sub_str,0,x_sym-1)
 mset(x,y,s3)
@@ -1356,9 +1355,9 @@ end
 end
 function draw_strength()
 local length = dash_sg/4
-if( skil_rest > 1) then
+if(skil_rest > 1) then
 for i = 0,length do
-spr(32, hero.x-56 + i*5,hero.y-38)  
+spr(32,hero.x-56+i*5,hero.y-38)  
 end
 end
 end
@@ -1368,13 +1367,20 @@ temp_rnd = flr((my_time%19)/10)
 spr(62+temp_rnd,arr[i].x*8,arr[i].y*8)
 end
 end
-function a_text(ll,ul,tet) if fin_t > ll and fin_t<ul then print(tet,hero.x-64,hero.y-40) end end
+function a_text(ll,ul,tet)
+if fin_t > ll and fin_t<ul then
+print(tet,hero.x-64,hero.y-40)
+end
+end
 fin_t=0
 end_ct={"thanks for game!","producer: stanislav skorb","programmer: koti4 and gate", "designer: vikat and danny", "composer: pavvl", "you open 2 mod!"}
 function final_cut()
-fin_t += 1 for i = 0,5,1 do
+fin_t += 1
+for i = 0,5,1 do
 a_text(i*90,80*(i+1),end_ct[i+1])
-a_text(400,425,end_ct[6]) end end
+a_text(400,425,end_ct[6])
+end
+end
 __gfx__
 0000882200000000000a000000000000000000000000000000000000000000000000028880090000c0000005d000000308800880088008800000000000000000
 000828888809000000008822000000000000000000000000000002888009000000008888899000001cd115510d5005308e8888888e8888881101110111011101
@@ -1772,3 +1778,4 @@ __music__
 00 2e2d2f44
 02 2e2a2f44
 03 30313244
+
