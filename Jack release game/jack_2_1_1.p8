@@ -96,10 +96,10 @@ current_dial = 0
 dialogues = {
 {"press ⬆️ or 🅾️\nto jump",
 "beware of spikes",
-"try to jump",
-"collect hearts",
-"torches are not \ndangerous",
-"collect coins!"},
+"try to jump over",
+"pick up hearts\nto replenish\nyour life",
+"blue torches are\nnot dangerous",
+"try to collect\nall coins!"},
 {},
 {
 "this castle is\ncrawling with all\nsorts of creatures.\nbe on the alert",
@@ -117,7 +117,7 @@ dialogues = {
 {},
 {
 "",
-"beware of the cursed \n cup! tap ➡️ or \n ⬅️ to escape the \n curse"
+"beware of the\ncursed head!\ntap ➡️ or ⬅️ to\nescape the curse"
 },
 {},{}}
 function level_initialiation()
