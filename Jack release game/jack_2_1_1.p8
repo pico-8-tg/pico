@@ -8,7 +8,7 @@ movement = {}
 col = {} 
 max_colide_count = 2
 hero.hp = 3
-cartdata ( "jack" )
+cartdata("jack_itdt_211")
 maxlvc = dget(1)
 record_score = dget(0)
 hero.is_crouch = false
@@ -198,7 +198,7 @@ end
 function main_menu_update()
 if(mm_pos == 0 and not str_game and (dbg or maxlvc >8))then
 if btnp(➡️) then
-mode = (mode+1)%3
+mode=(mode+1)%3
 end
 if btnp(⬅️) then
 mode=mode<= 0 and 2 or mode-1
@@ -206,7 +206,7 @@ end
 end
 if btnp(⬆️) then
 sfx"53"
-mm_pos = mm_pos <= 0 and mm_max_button-1or mm_pos -1
+mm_pos =mm_pos <= 0 and mm_max_button-1or mm_pos -1
 end
 if btnp(⬇️) then
 sfx"53"
@@ -341,8 +341,8 @@ end
 end
 function update_fboss_fir1(arr)
 for i = 1,# arr do
-diff_x = arr[i].ax- arr[i].x*8
-diff_y = arr[i].ay- arr[i].y*8
+diff_x = arr[i].ax-arr[i].x*8
+diff_y = arr[i].ay-arr[i].y*8
 if do_damage(arr[i].x,arr[i].y) then
 hero.hp -= 1
 sfx"55"
@@ -397,7 +397,7 @@ end
 -->8
 function key_control()
 if (btnp(5) and current_level== 11) or fin_t > 440 then
-mm_status = 0
+mm_status= 0
 fin_t = 0
 end
 crouch=hero.is_crouch and 0 or 1
@@ -412,7 +412,7 @@ update_ex_h(hero)
 col = collide(ex_hero,33,is_b,1,1)
 if (col ~= nil and
 col.y ~= nil) then
-if current_level < lm_max_button then
+if current_level<lm_max_button then
 c_lel = current_level-2
 last_h.hp = hero.hp
 last_h.coins = hero.coins
@@ -436,8 +436,8 @@ col = collide(ex_hero,80,is_b,1,crouch)
 if col ~= nil and col.x ~= nil then
 update_point(col,heart_arr,68,save_method)
 hero.s+=50
-if mode != 1 then
-hero.hp +=1
+if mode!=1 then
+hero.hp+=1
 else
 save_form = true
 last = time()
@@ -453,8 +453,8 @@ hero.s+=10*(mode+1)
 sfx"51"
 end
 if (button_zone[0] ~= nil) then
-n = no_map_cols_n(hero,button_zone,16,0)
-if n ~= nil then
+n=no_map_cols_n(hero,button_zone,16,0)
+if n~= nil then
 button_method(n)
 else
 action = -1 end
@@ -462,7 +462,7 @@ update_chains()
 end
 update_ex_h(hero)
 col = dist_to_col(ex_hero,2,is_b2,1,crouch)
-if ((col  ~= nil and col.x <= hero.sx) or (col  ~= nil and col.y <= hero.sy)) and not save_form then
+if ((col ~= nil and col.x <= hero.sx) or (col  ~= nil and col.y <= hero.sy)) and not save_form then
 hero.hp-=1
 sfx"55"
 save_form = true
@@ -471,9 +471,9 @@ update_save_form()
 jump_s_b = false
 update_ex_h(hero)
 col = dist_to_col(ex_hero,3,is_b2,1,1)
-if (col  ~= nil and col.y <= hero.sy) or (col  ~= nil and col.x <= hero.sx) then
+if (col ~= nil and col.y <= hero.sy) or (col  ~= nil and col.x <= hero.sx) then
 sfx"56"
-hero.sy = 0 - (jump_power*1.55)
+hero.sy = 0-(jump_power*1.55)
 jump_s_b = true
 end
 update_tr(hero,jump_s_b)
@@ -486,7 +486,7 @@ colx = dist_to_col(ex_hero,1,is_b2,1,crouch)
 update_ex_h(hero)
 ex_hero.sy = sgn(hero.sy)
 coly = dist_to_col(ex_hero,1,is_b2,1,crouch)
-hero.sy += g_time * 0.3
+hero.sy += g_time*0.3
 if coly ~= nil then
 if coly.y <= hero.sy then
 hero.sy = -2*sgn(hero.sy)
@@ -579,12 +579,12 @@ ex_hero.sy = 0
 end
 -->8
 function save_method(zone,i,blk)
-zone[i].is_active = true
-zone.last = i
+zone[i].is_active =true
+zone.last=i
 mset(zone[i].x,zone[i].y,blk)
 end
 function button_method(zone)
-if action ~= zone+1 then
+if action~=zone+1 then
 action = zone+1
 button_zone[zone].is_active = not button_zone[zone].is_active
 sfx(button_zone[zone].is_active and 58 or 57)
@@ -603,7 +603,7 @@ n_b =chains_zone[i].b[j]
 if(button_zone[n_b]~= nil) then
 c_b = button_zone[n_b]
 chains_zone[i].is_active = c_b.is_active
-j = c_b.is_active and j+1 or j_siz+1
+j=c_b.is_active and j+1 or j_siz+1
 else
 j+=1
 end
@@ -639,7 +639,7 @@ if(chains_zone[0] ~= nil) then
 for i = 0, #chains_zone, 1 do
 if(not chains_zone[i].is_active)
 then
-d = chains_zone[i].d
+d=chains_zone[i].d
 draw_chains(chains_zone[i],d.s,d.s2)
 else
 draw_chains(chains_zone[i],68,68)
@@ -707,7 +707,7 @@ chains_zone[i].is_active=button_zone[j].is_active
 k += 1
 end
 if button_zone[j].y/8==chains_zone[i].y then 
-chains_zone[i].b[k] = j
+chains_zone[i].b[k] =j
 k += 1
 end
 end
@@ -774,11 +774,11 @@ dial_arr[0] ~= nil then
 for i = 0, #dial_arr, 1 do
 dial_arr[i].img = mget(dial_arr[i].x,
 dial_arr[i].y)
-dial_arr[i].n = i
-current_dial += 1
-dial_arr[i].x *=8
-dial_arr[i].y *=8
-dial_arr[i].d = dialogues[current_level-1][current_dial]
+dial_arr[i].n=i
+current_dial+=1
+dial_arr[i].x*=8
+dial_arr[i].y*=8
+dial_arr[i].d=dialogues[current_level-1][current_dial]
 end
 end
 end
@@ -786,9 +786,9 @@ function buff_ex()
 if buff_arr ~= nil and buff_arr[0] ~= nil  then
 for i = 0, #buff_arr, 1 do
 buff_arr[i].is_active = true
-buff_arr[i].ico = mget(buff_arr[i].x,buff_arr[i].y)
-buff_arr[i].x *=8
-buff_arr[i].y *=8
+buff_arr[i].ico=mget(buff_arr[i].x,buff_arr[i].y)
+buff_arr[i].x*=8
+buff_arr[i].y*=8
 end
 end
 end
@@ -797,23 +797,23 @@ function check_dt_arr()
 if dash > 1 and ind_dt < 4 then
 local temp = {}
 local x = hero.x
-if hero.sx < 0 then
+if hero.sx<0 then
 x += 16
 end
 temp.x =x
 temp.y = hero.y+rnd(15)
 temp.spr=72
 temp.t=my_time
-dash_tail_arr[ind_dt] = temp
+dash_tail_arr[ind_dt] =temp
 ind_dt += 1
 end
 end
 function update_dt_arr()
 local del_fl = false
 for i=0,4 do
-local temp = dash_tail_arr[i]
+local temp=dash_tail_arr[i]
 if temp != nil then
-local diff = abs(temp.t-my_time)
+local diff =abs(temp.t-my_time)
 if diff > 4 then
 del_fl = true
 end
@@ -823,27 +823,26 @@ if del_fl then
 for i=1,#dash_tail_arr do
 dash_tail_arr[i-1]=dash_tail_arr[i]
 end
-dash_tail_arr[ind_dt] = nil
-ind_dt -= 1
+dash_tail_arr[ind_dt]= nil
+ind_dt-=1
 end
 end
 -->8
 function collide(obj,n,is_m,x_lim,y_lim)
-x_lim = x_lim == nil and 1 or x_lim
-y_lim = y_lim == nil and 1 or y_lim
-obj_m = {}
-obj_m.x = (obj.x+7)/8
-obj_m.y = (obj.y+4)/8
+x_lim =x_lim == nil and 1 or x_lim
+y_lim =y_lim == nil and 1 or y_lim
+obj_m ={}
+obj_m.x =(obj.x+7)/8
+obj_m.y =(obj.y+4)/8
 local result = {}
-c = {}
+c={}
 c.x= 8*flr(obj_m.x)+(obj.sx*8)
 c.y= 8*flr(obj_m.y)+(obj.sy*8)
 for j=0,y_lim,1 do
 for i=0,x_lim,1 do
-if is_m(c.x+(8*i),c.y+(8*j),n) == n
-then
-result.x= c.x+(8*i)
-result.y= c.y+(8*j)
+if is_m(c.x+(8*i),c.y+(8*j),n)==n then
+result.x=c.x+(8*i)
+result.y=c.y+(8*j)
 return result
 end
 end
