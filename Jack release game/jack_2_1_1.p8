@@ -99,19 +99,19 @@ dialogues = {
 "try to jump over",
 "pick up hearts\nto replenish\nyour life",
 "blue torches are\nnot dangerous",
-"try to collect\nall coins!"},
+"collect coins\nto high score"},
 {},
 {
 "this castle is\ncrawling with all\nsorts of creatures.\nbe on the alert",
 "sometimes you'll\nneed to choose a\nplace to jump from",
 "this is a new\nability! hold the\n⬆️ key to bounce\noff walls",
-"i dare you to\ncollect all the\ncoins"
+"try to collect\nall coins!"
 },
 {},
 {
 "your spring is well\noiled now,\nhold ⬇️ to duck",
-"beware!",
-"your spring gets\ntired, spend it\nwisely",
+"beware of wallfrogs!",
+"your spring can\nget tired,\nspend it wisely",
 "only the most adept\nwill be able to\npass it!"
 },
 {},
