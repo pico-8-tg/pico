@@ -1,6 +1,8 @@
 pico-8 cartridge // http://www.pico-8.com
 version 18
 __lua__
+-- jack in the dark tower v1.0
+-- targem homework 2020
 function _init()
 hero = {}
 dbg = false
@@ -1372,7 +1374,7 @@ print(tet,hero.x-64,hero.y-40)
 end
 end
 fin_t=0
-end_ct={"thanks for game!","producer: stanislav skorb","programmer: koti4 and gate", "designer: vikat and danny", "composer: pavvl", "you open 2 mod!"}
+end_ct={"thanks for play!","producer: stanislav skorb","programmer: koti4 and gate", "designer: vikat and danny", "composer: pavvl", "you open 2 mod!"}
 function final_cut()
 fin_t += 1
 for i = 0,5,1 do
